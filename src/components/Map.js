@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMap, GeoJSON, Popup } from 'react-leaflet';
 import * as d3 from 'd3';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+// @ts-ignore
 import 'leaflet.minichart';
 
 const COLORS = ['#FF0000', '#0000FF', '#00FF00', '#FFA500', '#800080', '#FFFF00'];
@@ -12,7 +13,7 @@ const Map = ({ votesData }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const precinctsResponse = await fetch('HD_32_Precincts.geojson');
+            const precinctsResponse = await fetch('/vote-distribution-app/HD_32_Precincts.geojson');
             const precinctsJson = await precinctsResponse.json();
             setPrecinctsData(precinctsJson);
         };

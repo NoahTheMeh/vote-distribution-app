@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Map from './components/Map';
-import MapView from './components/MapView';
+import Map from './Map';
+import MapView from './MapView';
 import Slider from './components/Slider';
-import OverallVoteTotals from './components/OverallVoteTotals'; // Adjust the path if necessary
+import OverallVoteTotals from './OverallVoteTotals'; // Adjust the path if necessary
 import * as d3 from 'd3';
 
 const App = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Map from './components/Map';
 import Slider from './components/Slider';
-import OverallVoteTotals from './components/OverallVoteTotals'; // Adjust the path if necessary
+import OverallVoteTotals from './components/OverallVoteTotals';
 import * as d3 from 'd3';
 import 'leaflet/dist/leaflet.css';
 
@@ -15,15 +15,20 @@ const App = () => {
 
   useEffect(() => {
     const fetchVotesData = async (path, setVotesData) => {
-      const votesResponse = await fetch(path);
-      const votesText = await votesResponse.text();
-      const votesCsv = d3.csvParse(votesText);
-      setVotesData(votesCsv);
-      console.log('Vote Loaded', votesCsv);
+      try {
+        let votesResponse = await fetch(path);
+        let votesText = await votesResponse.text();
+        console.log('Vote Text', votesText);
+        let votesCsv = d3.csvParse(votesText);
+        setVotesData(votesCsv);
+        console.log('Votes Loaded', votesCsv);
+      } catch (error) {
+        console.error('Error loading votes data:', error);
+      }
     };
 
-    fetchVotesData('PrimaryResults_2022.csv', setVotesData22);
-    fetchVotesData('PrimaryResults_2024.csv', setVotesData24);
+    fetchVotesData('/vote-distribution-app/PrimaryResults_2022.csv', setVotesData22);
+    fetchVotesData('/vote-distribution-app/PrimaryResults_2024.csv', setVotesData24);
   }, []);
 
   useEffect(() => {
@@ -52,10 +57,9 @@ const App = () => {
   const getDataSource = () => {
     switch (selectedDataSource) {
       case '2022':
-        console.log(votesData22);
+        console.log('Votes 22', votesData22);
         return votesData22;
       case '2024':
-        console.log('Voters', votesData24);
         return votesData24;
       case 'adjusted':
         return adjustedVotesData;
