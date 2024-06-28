@@ -3,6 +3,7 @@ import Map from './components/Map';
 import Slider from './components/Slider';
 import OverallVoteTotals from './components/OverallVoteTotals'; // Adjust the path if necessary
 import * as d3 from 'd3';
+import 'leaflet/dist/leaflet.css';
 
 const App = () => {
   const [runoffSplit, setRunoffSplit] = useState(80);
