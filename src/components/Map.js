@@ -12,7 +12,7 @@ const Map = ({ votesData }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const precinctsResponse = await fetch('https://github.com/NoahTheMeh/vote-distribution-app/blob/master/public/HD_32_Precincts.geojson');
+            const precinctsResponse = await fetch('HD_32_Precincts.geojson');
             const precinctsJson = await precinctsResponse.json();
             setPrecinctsData(precinctsJson);
         };
