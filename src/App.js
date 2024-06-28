@@ -21,8 +21,8 @@ const App = () => {
       console.log('Vote Loaded', votesCsv);
     };
 
-    fetchVotesData('/PrimaryResults_2022.csv', setVotesData22);
-    fetchVotesData('/PrimaryResults_2024.csv', setVotesData24);
+    fetchVotesData('https://github.com/NoahTheMeh/vote-distribution-app/blob/master/public/PrimaryResults_2022.csv', setVotesData22);
+    fetchVotesData('https://github.com/NoahTheMeh/vote-distribution-app/blob/master/public/PrimaryResults_2024.csv', setVotesData24);
   }, []);
 
   useEffect(() => {
