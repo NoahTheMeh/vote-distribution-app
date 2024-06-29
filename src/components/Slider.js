@@ -12,7 +12,7 @@ const Slider = ({ min, max, step, initialValue, onChange, label }) => {
     };
 
     return (
-        <div>
+        <div className='custom-slider'>
             {label && <label>{label}</label>}
             <input
                 type="range"
