@@ -108,7 +108,6 @@ const PieChartLayer = ({ precinctsData, votesData, colors }) => {
     };
 
     const handleMouseEnter = (event) => {
-        console.log('Mouse enter triggered');
 
         const target = event.target;
         const centroid = JSON.parse(target.getAttribute('data-centroid'));

@@ -6,18 +6,27 @@ const OverallVoteTotals = ({ votesData, colors, selectedDataSource, votesData22 
         return <div>Loading...</div>;
     }
 
+    let totalVotes;
+
     // Calculate overall vote totals dynamically
-    const totalVotes = votesData.reduce((acc, vote) => {
-        Object.keys(vote).forEach(key => {
-            if (key !== 'Precinct') {
-                if (!acc[key]) {
-                    acc[key] = 0;
+    if (selectedDataSource === 'previousTotalVotes') {
+        totalVotes = votesData.reduce((acc, vote) => {
+            acc['TotalVoters'] = (acc['TotalVoters'] || 0) + vote.TotalVoters;
+            return acc;
+        }, {});
+    } else {
+        totalVotes = votesData.reduce((acc, vote) => {
+            Object.keys(vote).forEach(key => {
+                if (key !== 'Precinct') {
+                    if (!acc[key]) {
+                        acc[key] = 0;
+                    }
+                    acc[key] += +vote[key];
                 }
-                acc[key] += +vote[key];
-            }
-        });
-        return acc;
-    }, {});
+            });
+            return acc;
+        }, {});
+    }
 
     const totalVotes22 = votesData22.reduce((acc, vote) => {
         Object.keys(vote).forEach(key => {
@@ -34,7 +43,6 @@ const OverallVoteTotals = ({ votesData, colors, selectedDataSource, votesData22 
     const totalVoteCount = Object.values(totalVotes).reduce((acc, value) => acc + value, 0);
     const totalVoteCount22 = Object.values(totalVotes22).reduce((acc, value) => acc + value, 0);
 
-    console.log(totalVotes22, totalVotes)
     let data = selectedDataSource === "change" ?
         [{ name: 'KEVIN WALLACE', value: totalVotes['KEVIN WALLACE'] - totalVotes22['KEVIN WALLACE'] },
         { name: 'Other', value: totalVoteCount - totalVoteCount22 - (totalVotes['KEVIN WALLACE'] - totalVotes22['KEVIN WALLACE']) }] :
@@ -44,7 +52,6 @@ const OverallVoteTotals = ({ votesData, colors, selectedDataSource, votesData22 
             percentage: ((totalVotes[key] / totalVoteCount) * 100).toFixed(2)
         })).filter(item => item.value > 0);
 
-    console.log(data);
 
     return (
         <div>
@@ -60,7 +67,7 @@ const OverallVoteTotals = ({ votesData, colors, selectedDataSource, votesData22 
                         ))}
                     </Bar>
                 </BarChart>
-                {(selectedDataSource !== "change") && <div>
+                {((selectedDataSource !== "change") && (selectedDataSource !== "previousTotalVotes")) && <div>
                     <PieChart width={600} height={400}>
                         <Pie
                             data={data}

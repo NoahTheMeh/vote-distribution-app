@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 
 const Slider = ({ min, max, step, initialValue, onChange, label }) => {
-    const [value, setValue] = useState(initialValue);
+    const [localValue, setLocalValue] = useState(initialValue);
 
-    const handleChange = (event) => {
-        const newValue = event.target.value;
-        setValue(newValue);
-        if (onChange) {
-            onChange(newValue);
-        }
+    const handleChange = (e) => {
+        setLocalValue(parseInt(e.target.value));
+    };
+
+    const handleRelease = () => {
+        onChange(localValue);
     };
 
     return (
-        <div className='custom-slider'>
-            {label && <label>{label}</label>}
+        <div className="slider">
+            <label>{label}: {localValue}</label>
             <input
                 type="range"
                 min={min}
                 max={max}
                 step={step}
-                value={value}
+                value={localValue}
                 onChange={handleChange}
-                style={{ width: '300px' }} // Adjust the width to make the slider longer
+                onMouseUp={handleRelease}
+                onTouchEnd={handleRelease}
             />
-            <span>{value}</span>
         </div>
     );
 };
